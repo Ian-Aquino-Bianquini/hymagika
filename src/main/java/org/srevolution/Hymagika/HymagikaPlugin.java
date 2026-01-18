@@ -5,6 +5,8 @@ import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import org.srevolution.Hymagika.Commands.PluginComands;
+import org.srevolution.Hymagika.Components.FullManaComponent;
 import org.srevolution.Hymagika.Components.ManaComponent;
 import org.srevolution.Hymagika.Components.PluginComponents;
 import org.srevolution.Hymagika.Systems.PluginSystems;
@@ -18,11 +20,12 @@ import javax.annotation.Nonnull;
 public class HymagikaPlugin extends JavaPlugin {
 
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
-    private static PluginComponents pluginComponents = new PluginComponents();
 
     private static HymagikaPlugin instance;
 
+    private static PluginComponents pluginComponents = new PluginComponents();
     private static PluginSystems pluginSystems = new PluginSystems();
+    private static PluginComands pluginComands = new PluginComands();
 
     public HymagikaPlugin(@Nonnull JavaPluginInit init) {
         super(init);
@@ -42,10 +45,15 @@ public class HymagikaPlugin extends JavaPlugin {
         return pluginComponents.getManaComponentType();
     }
 
+    public static ComponentType<EntityStore, FullManaComponent> getFullManaComponentType() {
+        return pluginComponents.getFullManaComponentType();
+    }
+
     @Override
     protected void setup() {
         LOGGER.atInfo().log("Setting up plugin " + this.getName());
         pluginComponents.register(this);
         pluginSystems.register(this);
+        pluginComands.register(this);
     }
 }
